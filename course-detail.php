@@ -3,21 +3,27 @@
      <!-- require_once bir defe sehiveye daxil et -->
      <!-- includa axtarilani soursda tapa bilmese bir xeta vermez -->
 
-    <?php require_once('config.php')?>
+     <?php require_once('config.php')?>
     <!-- <?php include('partials/_db.php')?>  -->
     <?php include('partials/_header.php')?>
     <?php include('partials/_navbar.php')?>
     <?php include('partials/_footer.php')?>
 
     <?php 
+        if(!isset($_GET["id"])){
+            header("Location: index.php");
+        }
+        $id=$_GET["id"];
+       
  
         $result_kategoriler=mysqli_query($baglanti,"SELECT * From kategoriler");
         $kategoriler=mysqli_fetch_all($result_kategoriler,MYSQLI_ASSOC);
 
-        $result_kurslar=mysqli_query($baglanti,"SELECT * from kurslar");
-        $kurslar=mysqli_fetch_all($result_kurslar,MYSQLI_ASSOC);
+        $result_kurs=mysqli_query($baglanti,"SELECT * from kurslar WHERE id=".$id);
+        $kurs=mysqli_fetch_assoc($result_kurs);
 
         mysqli_close($baglanti);
+
     ?>
 
 
@@ -29,14 +35,11 @@
             </div>
             <!-- right side -->
             <div class="col-8">
-                <?php foreach ($kurslar as $kurs):  ?>
-                    <?php if ($kurs['onay']): ?>
+               
 
                         <?php include('partials/_course.php')?>
 
-                    <?php endif ?>
 
-                <?php endforeach; ?>
 
                 
             </div>
